@@ -30,7 +30,26 @@ Link: https://www.kaggle.com/datasets/datasnaek/youtube-new
 
 ## Architecture used
 
-I have attached the architeture Diagram in the files.
+![AWS_Architecture](https://github.com/venkat2705/Youtube-data-analysis-data-engineering/assets/60357150/18361e7a-13b6-4448-9cfc-877d5adda21a)
+
+## High level project Flow
+
+Kaggle Dataset --> Landing Area --> Glue job and Lambda function --> enriched/cleansed --> ETL pipeline --> Analytics/Reporting --> Quicksight Dashboard.
+
+## Detailed Project Flow
+
+1. Ingest all the data from kaggle data set to an S3 bucket (You can use CLI or direct upload)
+2. Now build tables by crawling all the data and build a Glue Catalog for ETL.
+3. Go to AWS Lambda to preprocess the data to handle json data to convert into tables (I provided the scripts required) and put in in clean bucket.
+4. Again we need to build another crawler on the cleansed data. Now lets go to AWS Athena (Ad hoc query tool) and query our cleaned/enriched data.
+5. Its finally time to build an ETL pipeline on our enriched/cleansed data to make it available for analytics purpose. For this process we use AWS Glue Studio  and select the source as Cleaned data and Raw data from glue catalog and join them on category ID. Then store the destination data in new AWS S3 bucket and call it analytics bucket.
+
+![ETL_Pipeline](https://github.com/venkat2705/Youtube-data-analysis-data-engineering/assets/60357150/170af6a8-0e3a-46be-9286-3812097f84f9)
+
+6. Lets Do some Visualization using AWS Quicksight and select all the buckets we previously created. We need to visualize on the analytics bucket data and build the dashboard according our requirement.
+
+You need to have good knowledge on AWS services and be able to build required IAM roles and permissions on the fly when required.
+
 
 
 
